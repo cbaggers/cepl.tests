@@ -15,12 +15,12 @@
 
 (5am:in-suite test-all)
 
-(5am:test g->-test-0
+(def-test g->-test-0 (:suite test-all)
   (ensure-cepl
     (let ((pipeline
-           (g-> ()
+           (g-> nil
              (glambda ((vert :vec4))
                vert)
-             (glambda ()
+             (glambda nil
                (v! 1 0 0 0)))))
       (is (not (null pipeline))))))
