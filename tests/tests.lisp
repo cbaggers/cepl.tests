@@ -24,7 +24,7 @@
 (def-test g->-test-0 (:suite test-all)
   (ensure-cepl
     (let ((pipeline
-           (g-> nil
+           (pipeline-g nil
              (glambda ((vert :vec4))
                vert)
              (glambda nil
