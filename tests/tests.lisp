@@ -25,9 +25,9 @@
   (ensure-cepl
     (let ((pipeline
            (pipeline-g nil
-             (glambda ((vert :vec4))
+             (lambda-g ((vert :vec4))
                vert)
-             (glambda nil
+             (lambda-g nil
                (v! 1 0 0 0)))))
       (is (not (null pipeline))))))
 
