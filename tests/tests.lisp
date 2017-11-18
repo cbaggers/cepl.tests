@@ -5,7 +5,7 @@
 
 (defmacro ensure-cepl (&body body)
   `(progn
-     (unless cepl.context:*gl-context*
+     (when (cepl.lifecycle:uninitialized-p)
        (cepl:repl))
      ,@body))
 
