@@ -5,5 +5,9 @@
   :encoding :utf-8
   :serial t
   :depends-on (#:cepl #:fiveam #:cepl.sdl2)
-  :components ((:file "tests/package")
-               (:file "tests/tests")))
+  :components ((:file "package")
+               (:file "helpers")
+               (:file "tests/cepl-internals")
+               (:file "tests/buffer-backed-gpu-arrays")
+               (:file "tests/single-stage-pipelines")
+               (:file "tests/misc")))
