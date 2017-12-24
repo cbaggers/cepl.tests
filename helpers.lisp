@@ -4,7 +4,7 @@
 ;; Helper macros
 
 (defmacro ensure-cepl (&body body)
-  `(progn
+  `(let ((cepl.pipelines::*suppress-upload-message* t))
      (when (cepl.lifecycle:uninitialized-p)
        (cepl:repl))
      ,@body))
