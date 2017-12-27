@@ -9,5 +9,8 @@
                (:file "helpers")
                (:file "tests/cepl-internals")
                (:file "tests/buffer-backed-gpu-arrays")
+               (:file "tests/structs")
                (:file "tests/single-stage-pipelines")
+               (:file "tests/fbos")
+               (:file "tests/blending")
                (:file "tests/misc")))
