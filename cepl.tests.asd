@@ -13,4 +13,5 @@
                (:file "tests/single-stage-pipelines")
                (:file "tests/fbos")
                (:file "tests/blending")
+               (:file "tests/textures")
                (:file "tests/misc")))
