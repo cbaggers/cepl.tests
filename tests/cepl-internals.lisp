@@ -1,4 +1,5 @@
 (in-package :cepl.tests)
+(in-readtable :fn.reader)
 
 ;;
 ;; These are tests that we need to be true before we can rely

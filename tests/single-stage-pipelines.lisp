@@ -1,4 +1,5 @@
 (in-package :cepl.tests)
+(in-readtable :fn.reader)
 
 ;;------------------------------------------------------------
 
