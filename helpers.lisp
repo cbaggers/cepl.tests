@@ -16,7 +16,7 @@
          (free ,name)))))
 
 (defmacro with-free* (bindings &body body)
-  `(let ,bindings
+  `(let* ,bindings
      (unwind-protect (progn ,@body)
        ,@(loop :for (name) :in bindings :collect
             `(free ,name)))))
