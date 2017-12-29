@@ -14,4 +14,5 @@
                (:file "tests/fbos")
                (:file "tests/blending")
                (:file "tests/textures")
+               (:file "tests/ssbos")
                (:file "tests/misc")))
