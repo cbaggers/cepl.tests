@@ -27,7 +27,7 @@
                                   (int (x gl-work-group-id)))
                             (int (x gl-work-group-id)))
                       (values)))))
-      (map-g #'test-compute (make-compute-space 100)
+      (map-g pipeline (make-compute-space 100)
              :woop ssbo)
       (wait-on-gpu-fence (make-gpu-fence))
       (with-gpu-array-as-c-array (carr data)
