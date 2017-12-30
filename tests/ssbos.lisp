@@ -13,7 +13,7 @@
 
 ;;------------------------------------------------------------
 
-(def-test fbo-0 (:suite cepl.fbos)
+(def-test ssbos-0 (:suite cepl.fbos)
   (ensure-cepl
     (with-free* ((data (make-gpu-array nil :dimensions 1
                                        :element-type 'ssbo-test-data))
