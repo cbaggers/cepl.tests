@@ -29,3 +29,28 @@
           (is (equal (subseq data 1 4) (pull-g carr))))))))
 
 ;;------------------------------------------------------------
+
+(def-test gpu-array-3 (:suite cepl.gpu-arrays.buffer-backed)
+  (let ((data '(1 2 3 4 5 6)))
+    (ensure-cepl
+      (with-free* ((arr-0 (make-gpu-array data))
+                   (arr-1 (make-gpu-array data)))
+        ;; just try scoped binding a bunch of times and ensure
+        ;; the target is truly bound
+        (loop :for i :below 10 :do
+           (cepl:with-gpu-array-as-pointer (ptr-0
+                                            arr-0
+                                            :access-type :write-only
+                                            :target :array-buffer)
+             ptr-0 arr-0
+             (cepl:with-gpu-array-as-pointer (ptr-1
+                                              arr-1
+                                              :access-type :write-only
+                                              :target :element-array-buffer)
+               ptr-1 arr-1
+               (is (> (gl:get* :array-buffer-binding) 0))
+               (is (> (gl:get* :element-array-buffer-binding) 0))))
+           (setf (gpu-buffer-bound (cepl-context) :array-buffer)
+                 nil)
+           (setf (gpu-buffer-bound (cepl-context) :element-array-buffer)
+                 nil))))))
