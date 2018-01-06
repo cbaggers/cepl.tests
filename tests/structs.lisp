@@ -16,6 +16,8 @@
   (foo :uint)
   (bar (:uint 10)))
 
+;;------------------------------------------------------------
+
 (def-test structs-0 (:suite cepl.types)
   (ensure-cepl
     (let ((data (loop :for i :below 3 :collect
@@ -35,7 +37,7 @@
                           (declare (local-size :x 1 :y 1 :z 1))
                           (values)))))
           (fail "should have failed as doesnt specify :ubo or :ssbo"))
-      (cepl.errors:invalid-layout-for-inargs ()
+      (cepl.errors:invalid-layout-for-uniform ()
         (pass)))))
 
 (def-test structs-2 (:suite cepl.types)
