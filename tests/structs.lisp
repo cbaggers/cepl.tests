@@ -54,4 +54,45 @@
                       (values)))))
       (pass))))
 
+(def-test structs-3 (:suite cepl.types)
+  (ensure-cepl
+    (with-free* ((fbo (make-fbo '(0 :dimensions (4 4) :element-type :vec4)))
+                 (bs (make-buffer-stream nil :primitive :points))
+                 (val (make-g-pnt
+                  :position (v! 1 1 1)
+                  :normal (v! 2 2 2)
+                  :texture (v! 3 3))))
+      (with-free* ((pipeline (pipeline-g (:points)
+                               :fragment (lambda-g ((uv :vec2)
+                                                    &uniform
+                                                    (jam g-pnt))
+                                           (v! (pos jam) 0)))))
+        (with-fbo-bound (fbo)
+          (clear-fbo fbo)
+          (map-g pipeline bs :jam val))
+        (let* ((data (pull-g (attachment fbo 0))))
+          (is (every #'equal (v! 1 1 1 0) (caar data)))))
+      ;;
+      (with-free* ((pipeline (pipeline-g (:points)
+                               :fragment (lambda-g ((uv :vec2)
+                                                    &uniform
+                                                    (jam g-pnt))
+                                           (v! (norm jam) 0)))))
+        (with-fbo-bound (fbo)
+          (clear-fbo fbo)
+          (map-g pipeline bs :jam val))
+        (let* ((data (pull-g (attachment fbo 0))))
+          (is (every #'equal (v! 2 2 2 0) (caar data)))))
+      ;;
+      (with-free* ((pipeline (pipeline-g (:points)
+                               :fragment (lambda-g ((uv :vec2)
+                                                    &uniform
+                                                    (jam g-pnt))
+                                           (v! (tex jam) 0 0)))))
+        (with-fbo-bound (fbo)
+          (clear-fbo fbo)
+          (map-g pipeline bs :jam val))
+        (let* ((data (pull-g (attachment fbo 0))))
+          (is (every #'equal (v! 3 3 0 0) (caar data))))))))
+
 ;;------------------------------------------------------------
