@@ -21,7 +21,7 @@
                  (pipeline
                   (pipeline-g ()
                     :compute
-                    (lambda-g (&uniform (woop ssbo-test-data :ssbo :std-430))
+                    (lambda-g (&uniform (woop ssbo-test-data :ssbo))
                       (declare (local-size :x 1 :y 1 :z 1))
                       (setf (aref (ssbo-test-data-vals woop)
                                   (int (x gl-work-group-id)))
