@@ -8,11 +8,6 @@
 
 ;;------------------------------------------------------------
 
-(5am:def-suite cepl.internals)
-(5am:in-suite cepl.internals)
-
-;;------------------------------------------------------------
-
 (def-test test-lambda-pipeline-freeing (:suite cepl.internals)
   ;; This test is required as we are going to be using lambda-pipelines
   ;; heavily and we need to know that things are being cleaned up properly

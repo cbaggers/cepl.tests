@@ -3,11 +3,6 @@
 
 ;;------------------------------------------------------------
 
-(5am:def-suite cepl.textures)
-(5am:in-suite cepl.textures)
-
-;;------------------------------------------------------------
-
 (def-test textures-0 (:suite cepl.textures)
   (ensure-cepl
     (let ((data (list (v!uint8 255 0 0)

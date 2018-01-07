@@ -3,11 +3,6 @@
 
 ;;------------------------------------------------------------
 
-(5am:def-suite cepl.transform-feedback)
-(5am:in-suite cepl.transform-feedback)
-
-;;------------------------------------------------------------
-
 (def-test transform-feedback-0 (:suite cepl.transform-feedback)
   (ensure-cepl
     (with-free* ((tri-vert-stream

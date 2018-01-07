@@ -3,11 +3,6 @@
 
 ;;------------------------------------------------------------
 
-(5am:def-suite cepl.blending)
-(5am:in-suite cepl.blending)
-
-;;------------------------------------------------------------
-
 (def-test blending-0 (:suite cepl.blending)
   (ensure-cepl
     (with-free* ((fbo (make-fbo '(0 :dimensions (4 4))))

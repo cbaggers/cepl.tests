@@ -3,11 +3,6 @@
 
 ;;------------------------------------------------------------
 
-(5am:def-suite cepl.pipelines)
-(5am:in-suite cepl.pipelines)
-
-;;------------------------------------------------------------
-
 (def-test ssp-0 (:suite cepl.pipelines)
   (ensure-cepl
     (with-free* ((pipeline (pipeline-g ()

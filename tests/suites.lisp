@@ -1,0 +1,12 @@
+(in-package :cepl.tests)
+
+(5am:def-suite cepl.blending)
+(5am:def-suite cepl.gpu-arrays.buffer-backed)
+(5am:def-suite cepl.internals)
+(5am:def-suite cepl.fbos)
+(5am:def-suite cepl.misc)
+(5am:def-suite cepl.pipelines)
+(5am:def-suite cepl.misc)
+(5am:def-suite cepl.types)
+(5am:def-suite cepl.textures)
+(5am:def-suite cepl.transform-feedback)

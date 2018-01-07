@@ -3,11 +3,6 @@
 
 ;;------------------------------------------------------------
 
-(5am:def-suite cepl.gpu-arrays.buffer-backed)
-(5am:in-suite cepl.gpu-arrays.buffer-backed)
-
-;;------------------------------------------------------------
-
 (def-test gpu-array-0 (:suite cepl.gpu-arrays.buffer-backed)
   (let ((data '(1 2 3 4 5)))
     (ensure-cepl

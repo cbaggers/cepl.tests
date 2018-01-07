@@ -3,11 +3,6 @@
 
 ;;------------------------------------------------------------
 
-(5am:def-suite cepl.fbos)
-(5am:in-suite cepl.fbos)
-
-;;------------------------------------------------------------
-
 (def-test fbo-0 (:suite cepl.fbos)
   (ensure-cepl
     (with-free* ((fbo (make-fbo 0)))
