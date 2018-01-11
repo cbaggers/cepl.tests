@@ -17,4 +17,5 @@
                (:file "tests/textures")
                (:file "tests/ssbos")
                (:file "tests/transform-feedback")
-               (:file "tests/bake")))
+               (:file "tests/bake")
+               (:file "tests/funcall-g")))
