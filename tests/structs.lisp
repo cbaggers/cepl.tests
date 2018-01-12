@@ -11,6 +11,10 @@
   (foo :uint)
   (bar (:uint 10)))
 
+(defstruct-g test-struct-2
+  (foo :int)
+  (bar :float))
+
 ;;------------------------------------------------------------
 
 (def-test structs-0 (:suite cepl.types)
@@ -24,32 +28,34 @@
 
 (def-test structs-1 (:suite cepl.types)
   (ensure-cepl
-    (handler-case
-        (with-free* ((pipeline
-                      (pipeline-g ()
-                        :compute
-                        (lambda-g (&uniform (woop test-struct-1))
-                          (declare (local-size :x 1 :y 1 :z 1))
-                          (values)))))
-          (fail "should have failed as doesnt specify :ubo or :ssbo"))
-      (cepl.errors:invalid-layout-for-uniform ()
-        (pass)))))
+    (when (gl>= 4.3)
+      (handler-case
+          (with-free* ((pipeline
+                        (pipeline-g ()
+                          :compute
+                          (lambda-g (&uniform (woop test-struct-1))
+                            (declare (local-size :x 1 :y 1 :z 1))
+                            (values)))))
+            (fail "should have failed as doesnt specify :ubo or :ssbo"))
+        (cepl.errors:invalid-layout-for-uniform ()
+          (pass))))))
 
 (def-test structs-2 (:suite cepl.types)
   (ensure-cepl
-    (with-free* ((pipeline-0
-                  (pipeline-g ()
-                    :compute
-                    (lambda-g (&uniform (woop test-struct-1 :ssbo))
-                      (declare (local-size :x 1 :y 1 :z 1))
-                      (values))))
-                 (pipeline-1
-                  (pipeline-g ()
-                    :compute
-                    (lambda-g (&uniform (woop test-struct-1 :ubo))
-                      (declare (local-size :x 1 :y 1 :z 1))
-                      (values)))))
-      (pass))))
+    (when (gl>= 4.3)
+      (with-free* ((pipeline-0
+                    (pipeline-g ()
+                      :compute
+                      (lambda-g (&uniform (woop test-struct-1 :ssbo))
+                        (declare (local-size :x 1 :y 1 :z 1))
+                        (values))))
+                   (pipeline-1
+                    (pipeline-g ()
+                      :compute
+                      (lambda-g (&uniform (woop test-struct-1 :ubo))
+                        (declare (local-size :x 1 :y 1 :z 1))
+                        (values)))))
+        (pass)))))
 
 (def-test structs-3 (:suite cepl.types)
   (ensure-cepl
