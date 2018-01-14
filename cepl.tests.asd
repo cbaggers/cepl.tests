@@ -4,7 +4,7 @@
   :license "BSD 2 Clause"
   :encoding :utf-8
   :serial t
-  :depends-on (#:cepl #:fiveam #:cepl.sdl2)
+  :depends-on (#:cepl #:fiveam #:cepl.sdl2 #:varjo.tests)
   :components ((:file "package")
                (:file "helpers")
                (:file "tests/suites")
