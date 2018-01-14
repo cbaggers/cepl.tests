@@ -18,4 +18,5 @@
                (:file "tests/ssbos")
                (:file "tests/transform-feedback")
                (:file "tests/bake")
-               (:file "tests/funcall-g")))
+               (:file "tests/funcall-g")
+               (:file "tests/varjo")))
