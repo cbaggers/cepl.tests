@@ -4,7 +4,9 @@
 ;;------------------------------------------------------------
 ;; make an incomplete pipeline
 
-(defun-g bake-frag-0 ((uv :vec2) &uniform (foo (function (:vec2) :vec4)))
+(defun-g bake-frag-0 ((uv :vec2)
+                      &uniform
+                      (foo (function (:vec2) :vec4)))
   (funcall foo uv))
 
 (defpipeline-g bake-pipeline-0 (:points)
@@ -13,7 +15,7 @@
 ;;------------------------------------------------------------
 ;; helper functions
 
-(defun-g bake-func-0 ((val :vec2))
+(defun-g bake-func-1 ((val :vec2))
   (v! val val))
 
 ;;------------------------------------------------------------
@@ -22,7 +24,7 @@
   (ensure-cepl
     (with-free* ((fbo (make-fbo '(0 :dimensions (4 4) :element-type :vec4)))
                  (pipeline (bake-uniforms #'bake-pipeline-0
-                                          :foo (gpu-function (bake-func-0 :vec2))))
+                                          :foo (gpu-function (bake-func-1 :vec2))))
                  (bs (make-buffer-stream nil :primitive :points)))
       (with-fbo-bound (fbo)
         (map-g (the function pipeline) bs))
