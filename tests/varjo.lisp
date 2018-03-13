@@ -5,29 +5,30 @@
 
 (defun varjo.tests::glsl-compiles-p (elem)
   (ensure-cepl
-    (run-test-pipeline elem)))
+    (try-compile elem)))
 
 (defmethod run-test-pipeline (compiled)
   t)
 
-(defmethod run-test-pipeline ((compiled compiled-vertex-stage))
-  (try-compile compiled))
-
-(defmethod run-test-pipeline ((compiled compiled-fragment-stage))
-  (try-compile compiled))
-
-(defun try-compile (elem)
-  (let* ((prog-id (%gl:create-program))
-         (shader (cepl.pipelines::%gl-make-shader-from-varjo elem)))
-    (%gl:attach-shader prog-id shader)
-    (%gl:link-program prog-id)
-    (let ((fail-message
-           (unless (gl:get-program prog-id :link-status)
-             (format nil "Error Linking Program~%~a~%~%Compiled-stage:~%~a"
-                     (gl:get-program-info-log prog-id)
-                     (glsl-code elem)))))
-      (gl:detach-shader prog-id shader)
-      (gl:delete-program prog-id)
-      (when fail-message
-        (error fail-message))
-      t)))
+(defun try-compile (stages)
+  (let ((ver (cepl.context::get-best-glsl-version (cepl-context))))
+    (when (find-if (lambda (x) (string>= ver x))
+                   (context (first stages)))
+      (let* ((prog-id (%gl:create-program))
+             (shaders nil))
+        (loop :for stage :in stages :do
+           (let ((shader (cepl.pipelines::%gl-make-shader-from-varjo stage)))
+             (%gl:attach-shader prog-id shader)
+             (push shader shaders)))
+        (%gl:link-program prog-id)
+        (let ((fail-message
+               (unless (gl:get-program prog-id :link-status)
+                 (format nil "Error Linking Program~%~a~%~%Compiled-stages:~{~%~a~}"
+                         (gl:get-program-info-log prog-id)
+                         (mapcar #'glsl-code stages)))))
+          (loop :for shader :in shaders :do
+             (gl:detach-shader prog-id shader))
+          (gl:delete-program prog-id)
+          (when fail-message
+            (error fail-message))
+          t)))))
