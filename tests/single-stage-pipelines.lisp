@@ -15,7 +15,7 @@
 (def-test ssp-1 (:suite cepl.pipelines)
   (ensure-cepl
     (with-free* ((pipeline (pipeline-g ()
-                             :fragment (lambda-g ()
+                             :fragment (lambda-g ((uv :vec2))
                                          (v! 1 0 1 0)))))
       (is (not (null pipeline))))))
 
@@ -53,3 +53,13 @@
           (map-g pipeline bs))
         (v3:= (first (pull-g dest-arr))
               (v! 1 2 3))))))
+
+;;------------------------------------------------------------
+
+(def-test ssp-4 (:suite cepl.pipelines)
+  (ensure-cepl
+    (signals varjo-conditions:args-incompatible
+      (with-free* ((pipeline (pipeline-g ()
+                               :fragment (lambda-g ()
+                                           (v! 1 0 1 0)))))
+        nil))))
