@@ -19,4 +19,5 @@
                (:file "tests/transform-feedback")
                (:file "tests/bake")
                (:file "tests/funcall-g")
-               (:file "tests/varjo")))
+               (:file "tests/varjo")
+               (:file "tests/misc-build-tests")))
