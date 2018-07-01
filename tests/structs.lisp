@@ -26,19 +26,21 @@
                                         :element-type 'test-struct-0)))
         (is (equal data (pull-g arr)))))))
 
-(def-test structs-1 (:suite cepl.types)
-  (ensure-cepl
-    (when (gl>= 4.3)
-      (handler-case
-          (with-free* ((pipeline
-                        (pipeline-g ()
-                          :compute
-                          (lambda-g (&uniform (woop test-struct-1))
-                            (declare (local-size :x 1 :y 1 :z 1))
-                            (values)))))
-            (fail "should have failed as doesnt specify :ubo or :ssbo"))
-        (cepl.errors:invalid-layout-for-uniform ()
-          (pass))))))
+;; Disabled for now as failure now happens at macroexpansion time
+;;
+;; (def-test structs-1 (:suite cepl.types)
+;;   (ensure-cepl
+;;     (when (gl>= 4.3)
+;;       (handler-case
+;;           (with-free* ((pipeline
+;;                         (pipeline-g ()
+;;                           :compute
+;;                           (lambda-g (&uniform (woop test-struct-1))
+;;                             (declare (local-size :x 1 :y 1 :z 1))
+;;                             (values)))))
+;;             (fail "should have failed as doesnt specify :ubo or :ssbo"))
+;;         (cepl.errors:invalid-layout-for-uniform ()
+;;           (pass))))))
 
 (def-test structs-2 (:suite cepl.types)
   (ensure-cepl
