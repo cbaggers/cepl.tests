@@ -54,6 +54,33 @@
         (v3:= (first (pull-g dest-arr))
               (v! 1 2 3))))))
 
+;; CL-USER> (5am:run! 'cepl.tests::ssp-3)
+;;
+;; Running test SSP-3
+;; -----------------
+;;     CEPL-REPL
+;; -----------------
+;;
+;; glBindBufferRange
+;; target: 35982 (gl-enum :transform-feedback-buffer)
+;; index:  0
+;; buffer: 2
+;; offset: 0
+;; size:   1
+;;
+;; X
+;;  Did 1 check.
+;;     Pass: 0 ( 0%)
+;;     Skip: 0 ( 0%)
+;;     Fail: 1 (100%)
+;;
+;;  Failure Details:
+;;  --------------------------------
+;;  SSP-3 []:
+;;       Unexpected Error: #<CL-OPENGL-BINDINGS:OPENGL-ERROR {1003E5E433}>
+;; OpenGL signalled (1281 . INVALID-VALUE) from BIND-BUFFER-RANGE...
+;;  --------------------------------
+
 ;;------------------------------------------------------------
 
 (def-test ssp-4 (:suite cepl.pipelines)
