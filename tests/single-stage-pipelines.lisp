@@ -51,8 +51,8 @@
       (let ((tfs (make-transform-feedback-stream dest-arr)))
         (with-transform-feedback (tfs)
           (map-g pipeline bs))
-        (v3:= (first (pull-g dest-arr))
-              (v! 1 2 3))))))
+        (is-true (v3:= (first (pull-g dest-arr))
+                       (v! 1 2 3)))))))
 
 ;; CL-USER> (5am:run! 'cepl.tests::ssp-3)
 ;;
