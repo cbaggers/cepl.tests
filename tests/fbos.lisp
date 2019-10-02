@@ -926,3 +926,64 @@
                       (caar (pull-g (attachment fbo 1)))))))))))
 
 ;;------------------------------------------------------------
+;; layered sets
+
+(def-test layered-set-0 (:suite cepl.fbos)
+  (ensure-cepl
+    (let* ((layer-count 7))
+      (with-free* ((stream
+                    (make-buffer-stream
+                     (make-gpu-array (list (v! -1.0   1.0)
+                                           (v! -1.0  -1.0)
+                                           (v!  1.0  -1.0)
+                                           (v! -1.0   1.0)
+                                           (v!  1.0  -1.0)
+                                           (v!  1.0   1.0))
+                                     :element-type :vec2
+                                     :dimensions 6)))
+                   (splat
+                    (pipeline-g ()
+                      :vertex (lambda-g ((vert :vec2))
+                                (v! vert 0 1))
+                      :geometry (lambda-g (&uniform (layer :int))
+                                  (declare (output-primitive :kind :triangle-strip :max-vertices 3))
+                                  (setf gl-position (gl-position (aref gl-in 0)))
+                                  (setf gl-layer layer)
+                                  (emit-vertex)
+                                  (setf gl-position (gl-position (aref gl-in 1)))
+                                  (setf gl-layer layer)
+                                  (emit-vertex)
+                                  (setf gl-position (gl-position (aref gl-in 2)))
+                                  (setf gl-layer layer)
+                                  (emit-vertex)
+                                  (end-primitive)
+                                  (values))
+                      :fragment (lambda-g ()
+                                  (v! 1 1 1 1))))
+                   (t0 (make-texture nil :dimensions '(4 4)
+                                     :element-type :float
+                                     :layer-count layer-count))
+                   (d0 (make-texture nil :dimensions '(4 4)
+                                     :element-type :depth-component24
+                                     :layer-count layer-count))
+                   (s0 (sample t0)))
+        (let* ((lst (texref t0 :layer nil))
+               (lsd (texref d0 :layer nil))
+               (layer 4))
+          (with-free* ((fbo0 (make-fbo (list 0 lst) (list :d lsd))))
+            (with-fbo-bound (fbo0)
+              (clear)
+              (map-g splat stream
+                     :layer layer))
+            (loop
+               :for i :below layer-count
+               :collect
+                 (pull-g
+                  (texref t0 :layer i)))
+            ;; PULL-G AND CHECK GOES HERE
+            ;; (is (equal (pull-g t0)
+            ;;            '(((0 0) (0 0))
+            ;;              ((0 0) (0 0)))))
+            (is (= 1 1))))))))
+
+;;------------------------------------------------------------
